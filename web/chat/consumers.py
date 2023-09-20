@@ -1,35 +1,34 @@
 # chat/consumers.py
 
 import json
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = f"chat_{self.room_name}"
 
-        # Присоединение к комнате
-        async_to_sync(self.channel_layer.group_add)(
+        # Присоединиться к комнате
+        await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
 
-        self.accept()
+        await self.accept()
 
-    def disconnect(self, close_code):
-        # Покидание комнаты
-        async_to_sync(self.channel_layer.group_discard)(
+    async def disconnect(self, close_code):
+        # Покинуть комнату
+        await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
-    def receive(self, text_data):
-        data = json.loads(text_data)
-        message = data['message']
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
 
-        # Отправка сообщения в комнату
-        async_to_sync(self.channel_layer.group_send)(
+        # Отправить сообщение в комнату
+        await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
@@ -37,10 +36,10 @@ class ChatConsumer(WebsocketConsumer):
             }
         )
 
-    def chat_message(self, event):
+    async def chat_message(self, event):
         message = event['message']
 
-        # Отправка сообщения обратно клиенту
-        self.send(text_data=json.dumps({
+        # Отправить сообщение WebSocket
+        await self.send(text_data=json.dumps({
             'message': message
         }))

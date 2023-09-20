@@ -85,10 +85,8 @@ ASGI_APPLICATION = "web.routing.application"
 # Настройки для работы с Redis (замените на свои значения, если нужно)
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer",  # Используйте InMemoryChannelLayer для разработки.
+        # Для продакшн-среды можно использовать другой бэкенд, такой как Redis.
     },
 }
 
