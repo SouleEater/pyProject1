@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/chat/default_room/'
 LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'users',
+    'chat',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,31 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'web.wsgi.application'
+ASGI_APPLICATION = "web.routing.application"
+
+# Включите поддержку WebSocket
+ASGI_APPLICATION = "web.routing.application"
+
+# Настройки для работы с Redis (замените на свои значения, если нужно)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+# Настройка для разрешения WebSocket-соединений
+ALLOWED_HOSTS = ['*']
+
+# Настройки для авторизации WebSocket
+AUTHENTICATION_CLASSES = (
+    'channels.auth.WebSocketMiddlewareStack',
+)
+
+# Настройка для URL-прокси WebSocket
+WEBSOCKET_URL = "/ws/"
 
 
 # Database

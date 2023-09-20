@@ -3,6 +3,14 @@ from django.views import View
 from django.shortcuts import render, redirect
 
 from users.forms import UserCreationForm
+# users/views.py
+
+from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView
+
+class CustomLoginView(LoginView):
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('chat_room')  # Используйте имя URL вашей страницы чата
 
 
 class Register(View):
