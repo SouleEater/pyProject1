@@ -1,0 +1,66 @@
+body {
+    background-color: #000;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    background-image: url('/static/images/cyberpunk-bg.jpg');
+}
+
+h1 {
+    color: #ff00ff;
+}
+
+.user-info {
+    color: #00ff00;
+}
+
+.cyberpunk-container {
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  bottom: 0;
+  background-attachment: fixed;
+  color: #fff;
+  z-index: 1;
+
+}
+.cyberpunk-text {
+    font-family: 'Consolas', monospace;
+    color: #00ff00;
+    background-color: #000;
+    border: 1px solid #00ff00;
+    padding: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: run-text 20s linear infinite;
+}
+
+.cyberpunk-input {
+    background-color: #000;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 10px;
+    width: 100%;
+}
+
+.cyberpunk-button {
+    background-color: #ff00ff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.cyberpunk-button:hover {
+    background-color: #00ff00;
+}
+
+@keyframes run-text {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
