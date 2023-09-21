@@ -94,7 +94,11 @@ AUTHENTICATION_CLASSES = (
 )
 
 WEBSOCKET_URL = "/ws/"
-
+RABBITMQ_HOST = 'localhost'  # Укажите хост RabbitMQ сервера
+RABBITMQ_PORT = 5672  # Укажите порт RabbitMQ сервера
+RABBITMQ_VIRTUAL_HOST = '/'  # Укажите виртуальный хост RabbitMQ
+RABBITMQ_USERNAME = 'guest'  # Укажите имя пользователя RabbitMQ
+RABBITMQ_PASSWORD = 'guest'  # Укажите пароль пользователя RabbitMQ
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

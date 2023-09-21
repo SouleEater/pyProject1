@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-
+from .rabbitmq import send_to_rabbitmq
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
@@ -30,6 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'message': message
             }
         )
+        send_to_rabbitmq(message)
 
     async def chat_message(self, event):
         message = event['message']
